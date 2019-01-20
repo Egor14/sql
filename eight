@@ -1,0 +1,7 @@
+select products.product_name
+from products, order_details, orders
+where products.product_id = order_details.product_id
+and orders.order_id = order_details.order_id
+and ship_country = 'USA'
+GROUP BY Product_name
+order by sum(quantity) desc 

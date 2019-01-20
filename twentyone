@@ -1,0 +1,5 @@
+select suppliers.supplier_id, avg(products.unit_price)
+from suppliers, products
+where suppliers.supplier_id = products.supplier_id
+and suppliers.homepage is not null
+group by suppliers.supplier_id

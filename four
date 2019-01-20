@@ -1,0 +1,8 @@
+select product_name
+from products
+where product_name not in (
+select distinct(product_name)
+from products, order_details, orders
+where products.product_id = order_details.product_id
+and order_details.order_id = orders.order_id
+and date_part('year', orders.order_date) = 1996) 

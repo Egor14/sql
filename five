@@ -1,0 +1,6 @@
+SELECT Product_Name FROM Orders, order_Details, products
+	where orders.Order_ID = order_Details.Order_ID
+	and Order_Details.Product_ID = Products.Product_ID
+    and date_part('year', Orders.Order_Date) = 1997 AND date_part('MONTH',Orders.Order_Date) = 8
+	GROUP BY Product_name
+	ORDER BY SUM(Quantity) desc limit 1

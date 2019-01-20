@@ -1,0 +1,15 @@
+select orders.ship_country, sum(r.sum) as price
+from 
+	(select ship_country, orders.order_id, sum(quantity*(unit_price-discount))
+	from orders, order_details
+	where orders.order_id = order_details.order_id
+	group by orders.order_id
+	having count(product_id) = 										
+		(select min(t.count) from
+		(select orders.order_id, count(order_details.product_id)
+		from orders, order_details
+		where orders.order_id = order_details.order_id
+		group by orders.order_id) t)) r, orders
+	where r.order_id = orders.order_id
+group by orders.ship_country
+order by price desc

@@ -1,0 +1,10 @@
+select count(*) from (
+select customers.customer_id, sum(t.sum)
+from (
+select order_details.order_id, sum(order_details.quantity*(order_details.unit_price-order_details.discount))
+from order_details
+group by order_details.order_id ) t, orders, customers
+where t.order_id = orders.order_id
+and orders.customer_id = customers.customer_id
+group by customers.customer_id) r
+where r.sum > 10000
